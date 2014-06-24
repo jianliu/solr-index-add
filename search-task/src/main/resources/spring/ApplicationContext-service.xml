@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean class="org.apache.solr.client.solrj.impl.HttpSolrServer" id="solrServer" scope="prototype">
+        <constructor-arg name="baseURL" value="#{solrProps['solr.url']}"/>
+    </bean>
+
+    <bean class="com.xx.deal.title.search.service.impl.CreateIndexServiceImpl" id="createIndexService">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="server" ref="solrServer"/>
+    </bean>
+
+    <bean class="com.xx.deal.title.search.service.impl.TitleSearchServiceImpl" id="titleSearchService">
+        <property name="server" ref="solrServer"/>
+    </bean>
+
+</beans>
